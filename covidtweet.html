@@ -1,0 +1,243 @@
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Covid-19 - We, together</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/clean-blog.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">"We, together"</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">CHATBOT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="post.html">PREDICTION</a>
+          </li>
+                                  <li class="nav-item">
+            <a class="nav-link" href="covidtweet.html">Tweet Analysis</a>
+          </li>
+            
+          <li class="nav-item">
+            <a class="nav-link" href="news.html">NEWS</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/covid_tweet.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Covid Tweet Analysis</h1>
+            <p class="post-meta">Sentiment Analysis powered by deep learning</p>
+             <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+
+          
+          
+<div class="post-preview">          
+          
+              <div class="post-preview">
+   
+       
+        
+       
+              <hr>
+       <p class="post-meta">“Are you interested in how people emotionally reacted to COVID-19 last summer? Here I construct a sentiment model using over 100 thousands tweets to predict public emotion on COVID-19. But before we jump into the model, let's first do some fun exploratory analysis on tweet data."</p>
+                   <center> 
+                       <img src='img/tweet.png',width="200" height="300" > </center>
+              <hr>
+<br>
+  <p class="post-meta">Data sources: Kaggle/twitter: 170 thousands covid tweets posted from 07/2020 to 08/2020</p>
+              
+<br>
+        <img src='img/topmethod.png',width="100" height="300" >          
+                  
+<br>  <br>
+ 
+Out of 170 thousands tweets wordwide, people tends to use twitter web APP and android to post tweets.
+                  
+                  
+<br>
+<br>
+
+<br>
+                    <center> 
+                        <img src='img/toptag.png',width="400" height="300" >     </center>   
+                  
+<br>
+<br>
+
+            The top tags are #COVID19, #Covid19,#Coronavirus...    Hmmm.... that is kind of within our expectation :)
+                  
+                  
+<br>
+<br>              
+        
+<figure class="half" style="display:flex">
+    <img style="width:40%" src="img/us_wordcloud.png", width = 300, hight=500, hspace="40">
+    <img style="width:40%" src="img/india_wordcloud.png",width = 300, hight=500, hspace="40">
+</figure>
+                  
+   <br>
+<br>          
+  After data cleaning and grouping, we find the most used words from U.S. users are centered around politics such as Trump and education such as school. In contrast, Indian users tend to discuss new cases and vaccine for COVID-19.                   
+
+<div class="title">
+ <h1-1>Now Let's do the data modeling!</h1-1>
+</div>
+
+  <p class="post-meta">  Data sources: Kaggle/twitter: over 1 millions random tweets with pre-assigned sentiment score. We used 100000 of this data as training set our model and 20000 as validation set.</p>
+                  
+     <br>     
+
+                  Well, the data are pretty messy. We first removed punctuation, stopwords, url, and lowercased our tweets. Finally, we tokenized our tweets.
+                   <br>
+            <center>       <br>
+       <img src='img/processed.png',width="200" height="300" > </center>                   <br>                 
+                <p class="post-meta"> data cleaning</p>
+    
+         <br>              
+We used RNN network to build our deep learning model. In our training data, we pre-labled 1 as "positive" emotion while 0 as "negative" emotion. After we converted our tokenized sentence into vectors (leveraged GloVe to calculate embedding matrix), we identified the 3rd epoch is our optimized choice.
+              <br>     
+            <br>
+       <img src='img/GloVe.png',width="100" height="200" >                   
+                <p class="post-meta"> padded sentences</p>
+         <br>
+                   <center> 
+        <img src='img/epoch.png',width="200" height="400" > </center>     
+                  
+               <p class="post-meta"> validation accuracy peaked around 3rd epoch ( epoch =2 ) </p>     
+                  
+    After we trained our model, we threw in our covid tweets to make prediction. We set our threshold as 0.5. That is, for sentiment score over 0.5, we classified the tweet as 1, below classified as 0.    
+                  
+              <br><br>
+                    <center> 
+                        <img src='img/prediction.png',width="150" height="200" >    </center>
+               <br>
+               <p class="post-meta"> our prediction dataframe </p>           
+                  
+                        <br>  
+         Now let's see the result! Out of 10000 tweet, 46% are positive and 54% are negative.This even spreadout is out of my expectation since there are indeed many people who are optimistics amid this pandemics. 
+                
+                  
+                     <br><br>
+                    <center> 
+                        <img src='img/pie_chart.png',width="150" height="200" >     </center>
+               <br><br> 
+                  Among positive tweet, if you zoom in a little bit, we can see people often used "health", "thank" and "good".Among negative tweet, we  people often used words such as "death". In future, we could further apply this model to predict future public reaction regarding more specific insidences such as covid vaccines and lockdown. Currently, I am exploring the covid vaccine datasets and will update this website soon:)
+                        <br><br>    
+   <figure class="half" style="display:flex">
+    <img style="width:40%" src="img/positive.png", width = 300, hight=500, hspace="40">
+    <img style="width:40%" src="img/negative.png",width = 300, hight=500, hspace="40">
+</figure>
+           <br><br>
+        </div>        
+          
+
+
+          
+          
+          
+        <!-- Pager -->
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="#">Back to top &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
